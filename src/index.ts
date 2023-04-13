@@ -7,9 +7,10 @@ import {
   ScriptTarget,
   ScriptKind,
   EmitHint,
+  CallExpression,
 } from 'typescript';
 
-const createSimpleCallStatement = (prefix: string, arg: string) => {
+const createSimpleCallStatement = (arg: string) => {
   return factory.createCallExpression(
     factory.createPropertyAccessExpression(
       factory.createIdentifier('z'),
@@ -20,12 +21,13 @@ const createSimpleCallStatement = (prefix: string, arg: string) => {
   );
 };
 
-export const parse = (prefix: string, input: unknown) => {
-  const inner = (() => {
+export const parse = (prefix: string, input: unknown): VariableStatement => {
+  // TODO: path: string[]を受け取るようにする
+  const inner = (input: unknown): CallExpression => {
     if (typeof input === 'string' || typeof input === 'number') {
-      return createSimpleCallStatement(prefix, typeof input);
+      return createSimpleCallStatement(typeof input);
     } else if (input === null) {
-      return createSimpleCallStatement(prefix, 'null');
+      return createSimpleCallStatement('null');
     } else if (typeof input === 'object') {
       return factory.createCallExpression(
         factory.createPropertyAccessExpression(
@@ -33,29 +35,22 @@ export const parse = (prefix: string, input: unknown) => {
           factory.createIdentifier('object')
         ),
         undefined,
-        [
+        Object.entries(input).map(([k, v]: [string, unknown]) =>
           factory.createObjectLiteralExpression(
             [
               factory.createPropertyAssignment(
-                factory.createIdentifier('foo'), // ここを動的にする
-                factory.createCallExpression(
-                  factory.createPropertyAccessExpression(
-                    factory.createIdentifier('z'),
-                    factory.createIdentifier('number')
-                  ),
-                  undefined,
-                  []
-                )
+                factory.createIdentifier(k),
+                inner(v)
               ),
             ],
             true
-          ),
-        ]
+          )
+        )
       );
     } else {
       throw new Error();
     }
-  })();
+  };
 
   return factory.createVariableStatement(
     undefined,
@@ -65,7 +60,7 @@ export const parse = (prefix: string, input: unknown) => {
           factory.createIdentifier(`${prefix}Schema`),
           undefined,
           undefined,
-          inner
+          inner(input)
         ),
       ],
       NodeFlags.Const

@@ -178,12 +178,11 @@ describe('object', (): void => {
 
     test('code', (): void => {
       const actual = toString(ast);
-      console.log({ actual });
       const expected = dedent`
-    const ${prefix}Schema = z.object({
-        foo: z.number()
-    });
-    `;
+        const ${prefix}Schema = z.object({
+            foo: z.number()
+        });
+      `;
 
       expect(actual).toBe(expected);
     });
@@ -191,7 +190,7 @@ describe('object', (): void => {
 
   describe('pattern 2', () => {
     const prefix = 'prefix';
-    const input = { bar: 123 };
+    const input = { bar: 'Bar' };
     const ast = parse(prefix, input);
 
     test('AST', (): void => {
@@ -218,7 +217,7 @@ describe('object', (): void => {
                         factory.createCallExpression(
                           factory.createPropertyAccessExpression(
                             factory.createIdentifier('z'),
-                            factory.createIdentifier('number')
+                            factory.createIdentifier('string')
                           ),
                           undefined,
                           []
@@ -240,12 +239,11 @@ describe('object', (): void => {
 
     test('code', (): void => {
       const actual = toString(ast);
-      console.log({ actual });
       const expected = dedent`
-    const ${prefix}Schema = z.object({
-        bar: z.number()
-    });
-    `;
+        const ${prefix}Schema = z.object({
+            bar: z.string()
+        });
+      `;
 
       expect(actual).toBe(expected);
     });
