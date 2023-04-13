@@ -9,29 +9,35 @@ import {
   EmitHint,
 } from 'typescript';
 
+const createSimpleStatement = (prefix: string, arg: string) => {
+  return factory.createVariableStatement(
+    undefined,
+    factory.createVariableDeclarationList(
+      [
+        factory.createVariableDeclaration(
+          factory.createIdentifier(`${prefix}Schema`),
+          undefined,
+          undefined,
+          factory.createCallExpression(
+            factory.createPropertyAccessExpression(
+              factory.createIdentifier('z'),
+              factory.createIdentifier(arg)
+            ),
+            undefined,
+            []
+          )
+        ),
+      ],
+      NodeFlags.Const
+    )
+  );
+};
+
 export const parse = (prefix: string, input: unknown): VariableStatement => {
   if (typeof input === 'string' || typeof input === 'number') {
-    return factory.createVariableStatement(
-      undefined,
-      factory.createVariableDeclarationList(
-        [
-          factory.createVariableDeclaration(
-            factory.createIdentifier(`${prefix}Schema`),
-            undefined,
-            undefined,
-            factory.createCallExpression(
-              factory.createPropertyAccessExpression(
-                factory.createIdentifier('z'),
-                factory.createIdentifier(typeof input)
-              ),
-              undefined,
-              []
-            )
-          ),
-        ],
-        NodeFlags.Const
-      )
-    );
+    return createSimpleStatement(prefix, typeof input);
+  } else if (input === null) {
+    return createSimpleStatement(prefix, 'null');
   } else {
     throw new Error();
   }

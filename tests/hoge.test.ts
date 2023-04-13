@@ -83,3 +83,44 @@ describe('number', (): void => {
     expect(actual).toBe(expected);
   });
 });
+
+describe('null', (): void => {
+  const prefix = 'prefix';
+  const input = null;
+  const ast = parse(prefix, input);
+
+  test('AST', (): void => {
+    const actual = ast;
+
+    const expected = factory.createVariableStatement(
+      undefined,
+      factory.createVariableDeclarationList(
+        [
+          factory.createVariableDeclaration(
+            factory.createIdentifier(`${prefix}Schema`),
+            undefined,
+            undefined,
+            factory.createCallExpression(
+              factory.createPropertyAccessExpression(
+                factory.createIdentifier('z'),
+                factory.createIdentifier('null')
+              ),
+              undefined,
+              []
+            )
+          ),
+        ],
+        NodeFlags.Const
+      )
+    );
+
+    expect(actual).toStrictEqual(expected);
+  });
+
+  test('code', (): void => {
+    const actual = toString(ast);
+    const expected = `const ${prefix}Schema = z.null();`;
+
+    expect(actual).toBe(expected);
+  });
+});
