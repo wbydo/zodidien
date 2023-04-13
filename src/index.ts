@@ -35,17 +35,17 @@ export const parse = (prefix: string, input: unknown): VariableStatement => {
           factory.createIdentifier('object')
         ),
         undefined,
-        Object.entries(input).map(([k, v]: [string, unknown]) =>
+        [
           factory.createObjectLiteralExpression(
-            [
+            Object.entries(input).map(([k, v]: [string, unknown]) =>
               factory.createPropertyAssignment(
                 factory.createIdentifier(k),
                 inner(v)
-              ),
-            ],
+              )
+            ),
             true
-          )
-        )
+          ),
+        ]
       );
     } else {
       throw new Error();

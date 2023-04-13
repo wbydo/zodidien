@@ -248,4 +248,44 @@ describe('object', (): void => {
       expect(actual).toBe(expected);
     });
   });
+
+  describe('pattern 3', () => {
+    const prefix = 'prefix';
+    const input = { bar: { baz: 1234 } };
+    const ast = parse(prefix, input);
+
+    test('code', (): void => {
+      const actual = toString(ast);
+      const expected = dedent`
+        const ${prefix}Schema = z.object({
+            bar: z.object({
+                baz: z.number()
+            })
+        });
+      `;
+
+      expect(actual).toBe(expected);
+    });
+  });
+
+  describe('pattern 4', () => {
+    const prefix = 'prefix';
+    const input = { bar: { baz: 1234 }, foobar: 'asdf', barbaz: null };
+    const ast = parse(prefix, input);
+
+    test('code', (): void => {
+      const actual = toString(ast);
+      const expected = dedent`
+        const ${prefix}Schema = z.object({
+            bar: z.object({
+                baz: z.number()
+            }),
+            foobar: z.string(),
+            barbaz: z.null()
+        });
+      `;
+      console.log(actual);
+      expect(actual).toBe(expected);
+    });
+  });
 });
