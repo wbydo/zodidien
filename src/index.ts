@@ -9,7 +9,54 @@ import {
   EmitHint,
 } from 'typescript';
 
-const createSimpleStatement = (prefix: string, arg: string) => {
+const createSimpleCallStatement = (prefix: string, arg: string) => {
+  return factory.createCallExpression(
+    factory.createPropertyAccessExpression(
+      factory.createIdentifier('z'),
+      factory.createIdentifier(arg)
+    ),
+    undefined,
+    []
+  );
+};
+
+export const parse = (prefix: string, input: unknown) => {
+  const inner = (() => {
+    if (typeof input === 'string' || typeof input === 'number') {
+      return createSimpleCallStatement(prefix, typeof input);
+    } else if (input === null) {
+      return createSimpleCallStatement(prefix, 'null');
+    } else if (typeof input === 'object') {
+      return factory.createCallExpression(
+        factory.createPropertyAccessExpression(
+          factory.createIdentifier('z'),
+          factory.createIdentifier('object')
+        ),
+        undefined,
+        [
+          factory.createObjectLiteralExpression(
+            [
+              factory.createPropertyAssignment(
+                factory.createIdentifier('foo'),
+                factory.createCallExpression(
+                  factory.createPropertyAccessExpression(
+                    factory.createIdentifier('z'),
+                    factory.createIdentifier('number')
+                  ),
+                  undefined,
+                  []
+                )
+              ),
+            ],
+            true
+          ),
+        ]
+      );
+    } else {
+      throw new Error();
+    }
+  })();
+
   return factory.createVariableStatement(
     undefined,
     factory.createVariableDeclarationList(
@@ -18,68 +65,12 @@ const createSimpleStatement = (prefix: string, arg: string) => {
           factory.createIdentifier(`${prefix}Schema`),
           undefined,
           undefined,
-          factory.createCallExpression(
-            factory.createPropertyAccessExpression(
-              factory.createIdentifier('z'),
-              factory.createIdentifier(arg)
-            ),
-            undefined,
-            []
-          )
+          inner
         ),
       ],
       NodeFlags.Const
     )
   );
-};
-
-export const parse = (prefix: string, input: unknown) => {
-  if (typeof input === 'string' || typeof input === 'number') {
-    return createSimpleStatement(prefix, typeof input);
-  } else if (input === null) {
-    return createSimpleStatement(prefix, 'null');
-  } else if (typeof input === 'object') {
-    return factory.createVariableStatement(
-      undefined,
-      factory.createVariableDeclarationList(
-        [
-          factory.createVariableDeclaration(
-            factory.createIdentifier(`${prefix}Schema`),
-            undefined,
-            undefined,
-            factory.createCallExpression(
-              factory.createPropertyAccessExpression(
-                factory.createIdentifier('z'),
-                factory.createIdentifier('object')
-              ),
-              undefined,
-              [
-                factory.createObjectLiteralExpression(
-                  [
-                    factory.createPropertyAssignment(
-                      factory.createIdentifier('foo'),
-                      factory.createCallExpression(
-                        factory.createPropertyAccessExpression(
-                          factory.createIdentifier('z'),
-                          factory.createIdentifier('number')
-                        ),
-                        undefined,
-                        []
-                      )
-                    ),
-                  ],
-                  true
-                ),
-              ]
-            )
-          ),
-        ],
-        NodeFlags.Const
-      )
-    );
-  } else {
-    throw new Error();
-  }
 };
 
 export const toString = (v: VariableStatement): string => {

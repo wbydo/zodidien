@@ -127,63 +127,65 @@ describe('null', (): void => {
 });
 
 describe('object', (): void => {
-  const prefix = 'prefix';
-  const input = { foo: 123 };
-  const ast = parse(prefix, input);
+  describe('pattern 1', () => {
+    const prefix = 'prefix';
+    const input = { foo: 123 };
+    const ast = parse(prefix, input);
 
-  test('AST', (): void => {
-    const actual = ast;
-    const expected = factory.createVariableStatement(
-      undefined,
-      factory.createVariableDeclarationList(
-        [
-          factory.createVariableDeclaration(
-            factory.createIdentifier(`${prefix}Schema`),
-            undefined,
-            undefined,
-            factory.createCallExpression(
-              factory.createPropertyAccessExpression(
-                factory.createIdentifier('z'),
-                factory.createIdentifier('object')
-              ),
+    test('AST', (): void => {
+      const actual = ast;
+      const expected = factory.createVariableStatement(
+        undefined,
+        factory.createVariableDeclarationList(
+          [
+            factory.createVariableDeclaration(
+              factory.createIdentifier(`${prefix}Schema`),
               undefined,
-              [
-                factory.createObjectLiteralExpression(
-                  [
-                    factory.createPropertyAssignment(
-                      factory.createIdentifier('foo'),
-                      factory.createCallExpression(
-                        factory.createPropertyAccessExpression(
-                          factory.createIdentifier('z'),
-                          factory.createIdentifier('number')
-                        ),
-                        undefined,
-                        []
-                      )
-                    ),
-                  ],
-                  true
+              undefined,
+              factory.createCallExpression(
+                factory.createPropertyAccessExpression(
+                  factory.createIdentifier('z'),
+                  factory.createIdentifier('object')
                 ),
-              ]
-            )
-          ),
-        ],
-        NodeFlags.Const
-      )
-    );
+                undefined,
+                [
+                  factory.createObjectLiteralExpression(
+                    [
+                      factory.createPropertyAssignment(
+                        factory.createIdentifier('foo'),
+                        factory.createCallExpression(
+                          factory.createPropertyAccessExpression(
+                            factory.createIdentifier('z'),
+                            factory.createIdentifier('number')
+                          ),
+                          undefined,
+                          []
+                        )
+                      ),
+                    ],
+                    true
+                  ),
+                ]
+              )
+            ),
+          ],
+          NodeFlags.Const
+        )
+      );
 
-    expect(actual).toStrictEqual(expected);
-  });
+      expect(actual).toStrictEqual(expected);
+    });
 
-  test('code', (): void => {
-    const actual = toString(ast);
-    console.log({ actual });
-    const expected = dedent`
+    test('code', (): void => {
+      const actual = toString(ast);
+      console.log({ actual });
+      const expected = dedent`
     const ${prefix}Schema = z.object({
         foo: z.number()
     });
     `;
 
-    expect(actual).toBe(expected);
+      expect(actual).toBe(expected);
+    });
   });
 });
