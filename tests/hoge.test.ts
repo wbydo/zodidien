@@ -188,4 +188,66 @@ describe('object', (): void => {
       expect(actual).toBe(expected);
     });
   });
+
+  describe('pattern 2', () => {
+    const prefix = 'prefix';
+    const input = { bar: 123 };
+    const ast = parse(prefix, input);
+
+    test('AST', (): void => {
+      const actual = ast;
+      const expected = factory.createVariableStatement(
+        undefined,
+        factory.createVariableDeclarationList(
+          [
+            factory.createVariableDeclaration(
+              factory.createIdentifier(`${prefix}Schema`),
+              undefined,
+              undefined,
+              factory.createCallExpression(
+                factory.createPropertyAccessExpression(
+                  factory.createIdentifier('z'),
+                  factory.createIdentifier('object')
+                ),
+                undefined,
+                [
+                  factory.createObjectLiteralExpression(
+                    [
+                      factory.createPropertyAssignment(
+                        factory.createIdentifier('bar'),
+                        factory.createCallExpression(
+                          factory.createPropertyAccessExpression(
+                            factory.createIdentifier('z'),
+                            factory.createIdentifier('number')
+                          ),
+                          undefined,
+                          []
+                        )
+                      ),
+                    ],
+                    true
+                  ),
+                ]
+              )
+            ),
+          ],
+          NodeFlags.Const
+        )
+      );
+
+      expect(actual).toStrictEqual(expected);
+    });
+
+    test('code', (): void => {
+      const actual = toString(ast);
+      console.log({ actual });
+      const expected = dedent`
+    const ${prefix}Schema = z.object({
+        bar: z.number()
+    });
+    `;
+
+      expect(actual).toBe(expected);
+    });
+  });
 });

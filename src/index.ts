@@ -37,7 +37,7 @@ export const parse = (prefix: string, input: unknown) => {
           factory.createObjectLiteralExpression(
             [
               factory.createPropertyAssignment(
-                factory.createIdentifier('foo'),
+                factory.createIdentifier('foo'), // ここを動的にする
                 factory.createCallExpression(
                   factory.createPropertyAccessExpression(
                     factory.createIdentifier('z'),
