@@ -5,7 +5,8 @@
     "sourceRoot": "./src",
     "sourceMap": true,
     "outDir": "./dist",
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true
   },
   "include": ["src", "tests"]
 }
