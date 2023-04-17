@@ -95,9 +95,7 @@ export const toString = (v: VariableStatement): string => {
   return printer.printNode(EmitHint.Unspecified, v, resultFile);
 };
 
-const main = () => {
+export const main = () => {
   const input = readFileSync('/dev/stdin', 'utf-8');
   writeFileSync(1, toString(parse('tempPrefix', JSON.parse(input))));
 };
-
-main();
