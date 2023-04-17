@@ -26,7 +26,7 @@
   "scripts": {
     "lint": "eslint ./src/* && prettier --check src",
     "lint:fix": "eslint ./src/* --fix && prettier -w src",
-    "start": "node -r esbuild-register src/index.ts",
+    "start": "node -r esbuild-register src/bin.ts",
     "test": "jest",
     "update": "ncu -u"
   },
