@@ -7,9 +7,51 @@ import {
   ScriptTarget,
   ScriptKind,
   EmitHint,
+  CallExpression,
 } from 'typescript';
 
-const createSimpleStatement = (prefix: string, arg: string) => {
+const createSimpleCallStatement = (arg: string) => {
+  return factory.createCallExpression(
+    factory.createPropertyAccessExpression(
+      factory.createIdentifier('z'),
+      factory.createIdentifier(arg)
+    ),
+    undefined,
+    []
+  );
+};
+
+export const parse = (prefix: string, input: unknown): VariableStatement => {
+  // TODO: path: string[]を受け取るようにする
+  const inner = (input: unknown): CallExpression => {
+    if (typeof input === 'string' || typeof input === 'number') {
+      return createSimpleCallStatement(typeof input);
+    } else if (input === null) {
+      return createSimpleCallStatement('null');
+    } else if (typeof input === 'object') {
+      return factory.createCallExpression(
+        factory.createPropertyAccessExpression(
+          factory.createIdentifier('z'),
+          factory.createIdentifier('object')
+        ),
+        undefined,
+        [
+          factory.createObjectLiteralExpression(
+            Object.entries(input).map(([k, v]: [string, unknown]) =>
+              factory.createPropertyAssignment(
+                factory.createIdentifier(k),
+                inner(v)
+              )
+            ),
+            true
+          ),
+        ]
+      );
+    } else {
+      throw new Error();
+    }
+  };
+
   return factory.createVariableStatement(
     undefined,
     factory.createVariableDeclarationList(
@@ -18,29 +60,12 @@ const createSimpleStatement = (prefix: string, arg: string) => {
           factory.createIdentifier(`${prefix}Schema`),
           undefined,
           undefined,
-          factory.createCallExpression(
-            factory.createPropertyAccessExpression(
-              factory.createIdentifier('z'),
-              factory.createIdentifier(arg)
-            ),
-            undefined,
-            []
-          )
+          inner(input)
         ),
       ],
       NodeFlags.Const
     )
   );
-};
-
-export const parse = (prefix: string, input: unknown): VariableStatement => {
-  if (typeof input === 'string' || typeof input === 'number') {
-    return createSimpleStatement(prefix, typeof input);
-  } else if (input === null) {
-    return createSimpleStatement(prefix, 'null');
-  } else {
-    throw new Error();
-  }
 };
 
 export const toString = (v: VariableStatement): string => {
