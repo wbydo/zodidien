@@ -12,6 +12,11 @@ import {
   CallExpression,
 } from 'typescript';
 
+import { z } from 'zod';
+
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+
 const createSimpleCallStatement = (arg: string) => {
   return factory.createCallExpression(
     factory.createPropertyAccessExpression(
@@ -96,6 +101,24 @@ export const toString = (v: VariableStatement): string => {
 };
 
 export const main = () => {
-  const input = readFileSync('/dev/stdin', 'utf-8');
-  writeFileSync(1, toString(parse('tempPrefix', JSON.parse(input))));
+  const argv = yargs(hideBin(process.argv))
+    .scriptName('zodidien')
+    .usage(`Usage: $0 prefix`)
+    .version()
+    .alias('v', 'version')
+    .help()
+    .alias('h', 'help')
+    .epilog(`Copyright 2023 $0. All Rights Reserved.`)
+    .command(
+      '* <prefix>',
+      'create schema with prefix.',
+      () => void {},
+      (argv) => {
+        const { prefix } = z.object({ prefix: z.string() }).parse(argv);
+        const input = readFileSync('/dev/stdin', 'utf-8');
+        writeFileSync(1, toString(parse(prefix, JSON.parse(input))));
+        process.exit(0);
+      }
+    ).argv;
+  console.log(argv);
 };
