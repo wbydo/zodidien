@@ -284,7 +284,68 @@ describe('object', (): void => {
             barbaz: z.null()
         });
       `;
-      console.log(actual);
+      expect(actual).toBe(expected);
+    });
+  });
+});
+
+describe('array', (): void => {
+  describe('pattern 1', () => {
+    const prefix = 'prefix';
+    const input = [1];
+    const ast = parse(prefix, input);
+
+    test('code', () => {
+      const actual = toString(ast);
+      const expected = 'const prefixSchema = z.array(z.number());';
+      expect(actual).toBe(expected);
+    });
+  });
+
+  describe('pattern 2', () => {
+    const prefix = 'prefix';
+    const input = {
+      foo: 1,
+      bar: 'asdf',
+      baz: {
+        foobar: [1],
+        barbaz: ['asdf'],
+        bazfoo: [
+          {
+            foobarbaz: 123,
+            barbazfoo: 'asdf',
+            bazfoobar: {
+              foobarbazfoo: 1234,
+              barbazfoobar: 'asdf',
+              bazfoobarbaz: [[null]],
+            },
+          },
+        ],
+      },
+    };
+    const ast = parse(prefix, input);
+
+    test('code', () => {
+      const actual = toString(ast);
+      const expected = dedent`
+        const prefixSchema = z.object({
+            foo: z.number(),
+            bar: z.string(),
+            baz: z.object({
+                foobar: z.array(z.number()),
+                barbaz: z.array(z.string()),
+                bazfoo: z.array(z.object({
+                    foobarbaz: z.number(),
+                    barbazfoo: z.string(),
+                    bazfoobar: z.object({
+                        foobarbazfoo: z.number(),
+                        barbazfoobar: z.string(),
+                        bazfoobarbaz: z.array(z.array(z.null()))
+                    })
+                }))
+            })
+        });
+      `;
       expect(actual).toBe(expected);
     });
   });

@@ -28,6 +28,16 @@ export const parse = (prefix: string, input: unknown): VariableStatement => {
       return createSimpleCallStatement(typeof input);
     } else if (input === null) {
       return createSimpleCallStatement('null');
+    } else if (Array.isArray(input)) {
+      const item: unknown = input[0];
+      return factory.createCallExpression(
+        factory.createPropertyAccessExpression(
+          factory.createIdentifier('z'),
+          factory.createIdentifier('array')
+        ),
+        undefined,
+        [inner(item)]
+      );
     } else if (typeof input === 'object') {
       return factory.createCallExpression(
         factory.createPropertyAccessExpression(
