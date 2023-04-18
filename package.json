@@ -1,10 +1,17 @@
 {
   "name": "@wbydo/zodidien",
   "description": "",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2.1",
   "author": "wbydo",
   "bin": {
     "zodidien": "dist/bin.js"
+  },
+  "bugs": {
+    "url": "https://github.com/wbydo/zodidien/issues"
+  },
+  "dependencies": {
+    "yargs": "^17.7.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/jest": "^29.2.5",
@@ -26,18 +33,25 @@
     "ts-dedent": "^2.2.0",
     "typescript": "^4.9.4"
   },
+  "homepage": "https://github.com/wbydo/zodidien",
+  "keywords": [
+    "code generation",
+    "type convert",
+    "validation",
+    "zod"
+  ],
+  "license": "MIT",
   "main": "index.js",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wbydo/zodidien.git"
+  },
   "scripts": {
+    "build": "tsc -p ./tsconfig.build.json",
     "lint": "eslint ./src/* && prettier --check src",
     "lint:fix": "eslint ./src/* --fix && prettier -w src",
     "start": "node -r esbuild-register src/bin.ts",
     "test": "jest",
-    "update": "ncu -u",
-    "build": "tsc -p ./tsconfig.build.json"
-  },
-  "dependencies": {
-    "yargs": "^17.7.1",
-    "zod": "^3.21.4"
+    "update": "ncu -u"
   }
 }
