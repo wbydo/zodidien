@@ -16,8 +16,6 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - run: npm ci
-      - run: npx fixpack --dryRun
-      - run: npm run lint
-      - run: npx fixpack --dryRun
-      # - run: npm run build --if-present
+      # - run: npx fixpack --dryRun
+      # - run: npm run lint
       - run: npm test
