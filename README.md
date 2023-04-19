@@ -2,6 +2,12 @@
 
 Generates [zod](https://github.com/colinhacks/zod) schema from JSON string on standard inputs.
 
+---
+
+TODO: テストのバッジ
+[![Created by (Twitter@DekinaiFootball)](https://img.shields.io/badge/created-%40wbydo-blue)](https://twitter.com/DekinaiFootball)
+![npm](https://img.shields.io/npm/dt/@wbydo/zodidien)
+
 ## Installation
 
 ```
