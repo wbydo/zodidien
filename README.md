@@ -1,7 +1,7 @@
 ![zodidien](./logo.svg)
 
 [![Unit Testing](https://github.com/wbydo/zodidien/actions/workflows/unit-testing.yml/badge.svg?branch=main)](https://github.com/wbydo/zodidien/actions/workflows/unit-testing.yml)
-![Packagist License](https://img.shields.io/packagist/l/wbydo/zodidien)
+![GitHub](https://img.shields.io/github/license/wbydo/zodidien)
 [![Created by (Twitter@DekinaiFootball)](https://img.shields.io/badge/created-%40wbydo-blue)](https://twitter.com/DekinaiFootball)
 ![npm](https://img.shields.io/npm/dt/@wbydo/zodidien)
 
