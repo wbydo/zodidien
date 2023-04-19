@@ -1,13 +1,11 @@
-# zodidien
-
-Generates [zod](https://github.com/colinhacks/zod) schema from JSON string on standard inputs.
-
----
+![zodidien](./logo.svg)
 
 TODO: テストのバッジ
 ![Packagist License](https://img.shields.io/packagist/l/wbydo/zodidien)
 [![Created by (Twitter@DekinaiFootball)](https://img.shields.io/badge/created-%40wbydo-blue)](https://twitter.com/DekinaiFootball)
 ![npm](https://img.shields.io/npm/dt/@wbydo/zodidien)
+
+Generates [zod](https://github.com/colinhacks/zod) schema from JSON string on standard inputs.
 
 ## Installation
 
