@@ -1,7 +1,9 @@
 name: On Merge Main
 
-# TODO: fix
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   on-merge-main:
