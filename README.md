@@ -15,6 +15,8 @@ npm install --save-dev @wbydo/zodidien
 
 ## Usage
 
+!!! It does not work properly until v1.0.0 !!!
+
 ### Generating a schema
 
 ```
