@@ -1,9 +1,9 @@
 ![zodidien](./logo.svg)
 
 [![Unit Testing](https://github.com/wbydo/zodidien/actions/workflows/unit-testing.yml/badge.svg?branch=main)](https://github.com/wbydo/zodidien/actions/workflows/unit-testing.yml)
-![GitHub](https://img.shields.io/github/license/wbydo/zodidien)
-[![Created by (Twitter@DekinaiFootball)](https://img.shields.io/badge/created-%40wbydo-blue)](https://twitter.com/DekinaiFootball)
-![npm](https://img.shields.io/npm/dt/@wbydo/zodidien)
+[![LICENSE](https://img.shields.io/github/license/wbydo/zodidien)](https://github.com/wbydo/zodidien/blob/master/LICENSE)
+[![Created by wbydo](https://img.shields.io/badge/created-%40wbydo-blue)](https://lit.link/wbydo)
+[![npm](https://img.shields.io/npm/dt/@wbydo/zodidien)](https://www.npmjs.com/package/@wbydo/zodidien)
 
 Generates [zod](https://github.com/colinhacks/zod) schema from JSON string on standard inputs.
 
