@@ -53,6 +53,22 @@ pbpaste | npx zodidien foobar
 TODO...
 ```
 
+## Convert Types
+
+Here is what the types on JSON are converted to.†1
+
+| JSON    | TypeScript      |
+| ------- | --------------- |
+| number  | `z.number()`    |
+| string  | `z.string()`    |
+| boolean | `z.boolean()`   |
+| array   | `z.array()` †2  |
+| object  | `z.object()` †3 |
+
+- †1: If anything other than the types in the table is entered, an error will occur.
+- †2: Ignored except for first elements.
+- †3: Non-string type keys are not supported.
+
 ## Dependencies
 
 This package has the following dependencies:
