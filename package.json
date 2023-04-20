@@ -53,5 +53,9 @@
     "start": "node -r esbuild-register src/bin.ts",
     "test": "jest",
     "update": "ncu -u"
-  }
+  },
+  "files": [
+    "dist",
+    "bin.js"
+  ]
 }
