@@ -31,7 +31,11 @@ const createSimpleCallStatement = (arg: string) => {
 export const parse = (prefix: string, input: unknown): VariableStatement => {
   // TODO: path: string[]を受け取るようにする
   const inner = (input: unknown): CallExpression => {
-    if (typeof input === 'string' || typeof input === 'number') {
+    if (
+      typeof input === 'string' ||
+      typeof input === 'number' ||
+      typeof input === 'boolean'
+    ) {
       return createSimpleCallStatement(typeof input);
     } else if (input === null) {
       return createSimpleCallStatement('null');
