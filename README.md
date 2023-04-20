@@ -50,9 +50,7 @@ pbpaste | npx zodidien foobar
 ### Generating a schema in code
 
 ```
-
-TODO
-
+TODO...
 ```
 
 ## Dependencies
