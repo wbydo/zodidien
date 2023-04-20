@@ -126,6 +126,19 @@ describe('null', (): void => {
   });
 });
 
+describe('boolean', (): void => {
+  const prefix = 'prefix';
+  const input = false;
+  const ast = parse(prefix, input);
+
+  test('code', (): void => {
+    const actual = toString(ast);
+    const expected = `const ${prefix}Schema = z.boolean();`;
+
+    expect(actual).toBe(expected);
+  });
+});
+
 describe('object', (): void => {
   describe('pattern 1', () => {
     const prefix = 'prefix';
@@ -342,6 +355,66 @@ describe('array', (): void => {
                         barbazfoobar: z.string(),
                         bazfoobarbaz: z.array(z.array(z.null()))
                     })
+                }))
+            })
+        });
+      `;
+      expect(actual).toBe(expected);
+    });
+  });
+});
+
+describe('complex', (): void => {
+  describe('pattern 1', () => {
+    const prefix = 'prefix';
+    const input = {
+      a: {
+        b: [
+          [
+            {
+              c: true,
+            },
+          ],
+        ],
+      },
+      c: {
+        e: false,
+        f: [
+          {
+            g: 1234,
+            h: [
+              {
+                i: 'asdf',
+                j: {
+                  k: [5678],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    };
+    const ast = parse(prefix, input);
+
+    test('code', () => {
+      const actual = toString(ast);
+      const expected = dedent`
+        const prefixSchema = z.object({
+            a: z.object({
+                b: z.array(z.array(z.object({
+                    c: z.boolean()
+                })))
+            }),
+            c: z.object({
+                e: z.boolean(),
+                f: z.array(z.object({
+                    g: z.number(),
+                    h: z.array(z.object({
+                        i: z.string(),
+                        j: z.object({
+                            k: z.array(z.number())
+                        })
+                    }))
                 }))
             })
         });
