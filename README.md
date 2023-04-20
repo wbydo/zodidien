@@ -36,7 +36,7 @@ TODO
 
 This package has the following dependencies:
 
-[zod](https://github.com/colinhacks/zod) (v3.6.0 or later) - A TypeScript-first schema validation library.
+[zod](https://github.com/colinhacks/zod) - A TypeScript-first schema validation library.
 
 ## Similar Library
 
