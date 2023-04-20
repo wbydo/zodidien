@@ -74,15 +74,15 @@ Please make sure to update tests as appropriate.
 To check the operation in the local development environment, execute the following command
 
 ```bash
-$ git clone https://github.com/wbydo/zodidien.git
+git clone https://github.com/wbydo/zodidien.git
 
-$ cd zodidien
+cd zodidien
 
-$ npm ci
+npm ci
 
-$ npm test
+npm test
 
-$ echo '{"foo": 1234, "bar": "asdf"}' | npm start prefix
+echo '{"foo": 1234, "bar": "asdf"}' | npm start prefix
 ```
 
 ## License
