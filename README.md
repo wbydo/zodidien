@@ -19,17 +19,40 @@ npm install --save-dev @wbydo/zodidien
 
 ### Generating a schema
 
+When you type this command...
+
+```bash
+echo '{"foo": 1234, "bar": "asdf"}' | npx zodidien foobar
 ```
-cat sample.json
 
+This string will be output
 
-cat sample.json | npx zodidien foobar
+```ts
+const foobarSchema = z.object({
+  foo: z.number(),
+  bar: z.string(),
+});
+```
+
+It reads from standard input and outputs to standard output, so it can be used like this.
+
+```bash
+pbpaste | npx zodidien foobar
+
+# output
+#
+# const foobarSchema = z.object({
+#    foo: z.number(),
+#    bar: z.string()
+#});
 ```
 
 ### Generating a schema in code
 
 ```
+
 TODO
+
 ```
 
 ## Dependencies
