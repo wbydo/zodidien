@@ -33,6 +33,10 @@
     "ts-dedent": "^2.2.0",
     "typescript": "^4.9.4"
   },
+  "files": [
+    "dist",
+    "bin.js"
+  ],
   "homepage": "https://github.com/wbydo/zodidien",
   "keywords": [
     "code generation",
