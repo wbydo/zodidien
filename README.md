@@ -1,7 +1,7 @@
 ![zodidien](./logo.svg)
 
 [![Unit Testing](https://github.com/wbydo/zodidien/actions/workflows/unit-testing.yml/badge.svg?branch=main)](https://github.com/wbydo/zodidien/actions/workflows/unit-testing.yml)
-[![LICENSE](https://img.shields.io/github/license/wbydo/zodidien)](https://github.com/wbydo/zodidien/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/github/license/wbydo/zodidien)](https://github.com/wbydo/zodidien/blob/main/LICENSE)
 [![Created by wbydo](https://img.shields.io/badge/created-%40wbydo-blue)](https://lit.link/wbydo)
 [![npm](https://img.shields.io/npm/dt/@wbydo/zodidien)](https://www.npmjs.com/package/@wbydo/zodidien)
 
@@ -14,8 +14,6 @@ npm install --save-dev @wbydo/zodidien
 ```
 
 ## Usage
-
-!!! It does not work properly until v1.0.0 !!!
 
 ### Generating a schema
 
