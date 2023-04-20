@@ -4,7 +4,7 @@
   "version": "1.0.0-alpha.2.5",
   "author": "wbydo",
   "bin": {
-    "zodidien": "dist/bin.js"
+    "zodidien": "./bin.js"
   },
   "bugs": {
     "url": "https://github.com/wbydo/zodidien/issues"
