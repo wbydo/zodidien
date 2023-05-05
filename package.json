@@ -1,7 +1,7 @@
 {
   "name": "@wbydo/zodidien",
   "description": "Generates zod schema from JSON string on standard inputs.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "wbydo",
   "bin": {
     "zodidien": "./bin.js"
